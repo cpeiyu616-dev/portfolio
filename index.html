@@ -386,10 +386,18 @@
       position: relative;
       flex: 1;
       width: 100%;
-      overflow: hidden;
+      overflow: visible;      /* 讓切換箭頭可以放在左右留白區 */
       display: flex;
       align-items: center;
       min-height: 0;
+    }
+
+    .slides-viewport {        /* 真正負責裁切滑動內容的外框 */
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
     }
 
     .slides-container {
@@ -440,10 +448,10 @@
       height: 100%;
       max-height: 520px;
       overflow-y: auto;
-      padding-right: 1rem;
+      padding-right: 0.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.2rem;
+      gap: 1.5rem;
       scrollbar-width: none;
     }
     .slide-details::-webkit-scrollbar {
@@ -455,6 +463,7 @@
 
     .slide-title {
       font-size: 2.2rem;
+      line-height: 1.35;
       font-weight: 300;
       color: #fff;
       margin-bottom: 0.4rem;
@@ -468,7 +477,8 @@
     }
 
     .detail-section h4 {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
       font-weight: 700;
       color: #fff;
       margin-bottom: 0.3rem;
@@ -476,12 +486,15 @@
     }
 
     .detail-section p {
-      font-size: 0.9rem;
+      font-size: 1rem;
       font-weight: 300;
       color: #ccc;
-      line-height: 1.6;
+      line-height: 1.75;
       overflow-wrap: anywhere;
+      text-wrap: pretty;
     }
+    /* 📌 子句為一個單位：空間夠就併在同一行，不夠才整句換到下一行（避免硬換行造成的短行） */
+    .seg { display: inline-block; max-width: 100%; vertical-align: top; }
 
     .highlight-box {
       background: rgba(255, 255, 255, 0.03);
@@ -510,15 +523,15 @@
       position: absolute;
       top: 0;
       height: 100%;
-      width: 100px;
+      width: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10;
       cursor: pointer;
     }
-    .works-slider-section .prev-nav-zone { left: calc(2% - 20px); top: 0; }
-    .works-slider-section .next-nav-zone { right: calc(8% - 50px); top: 0; }
+    .works-slider-section .prev-nav-zone { left: -66px; top: 0; }
+    .works-slider-section .next-nav-zone { right: -66px; top: 0; }
 
     .works-slider-section .nav-btn {
       width: 48px;
@@ -664,6 +677,7 @@
       display: flex;
       flex-direction: column;
       scrollbar-width: none;
+      padding-right: 0.5rem;
     }
     .game-content-box::-webkit-scrollbar {
       display: none;
@@ -807,15 +821,15 @@
       position: absolute;
       top: 0;
       height: 100%;
-      width: 100px;
+      width: 60px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 10;
       cursor: pointer;
     }
-    .game-section .prev-nav-zone { left: calc(4.5% - 50px); }
-    .game-section .next-nav-zone { right: calc(4.5% - 50px); }
+    .game-section .prev-nav-zone { left: -66px; }
+    .game-section .next-nav-zone { right: -66px; }
 
     .game-section .nav-btn {
       width: 48px;
@@ -1071,6 +1085,7 @@
         align-items: flex-start;
         touch-action: pan-y;
       }
+      .slides-viewport { height: auto; align-items: flex-start; }
       .slides-container { height: auto; align-items: flex-start; }
       .slide-item {
         height: auto;
@@ -1213,7 +1228,7 @@
 
       /* ---- 手作作品 ---- */
       .works-slider-section { padding: 3.6rem 6% 1rem; }
-      .slide-details { gap: 0.9rem; padding-right: 2.4rem; }
+      .slide-details { gap: 0.9rem; padding-right: 0.6rem; }
       .slide-title { font-size: 1.8rem; margin-bottom: 0.2rem; padding-bottom: 0.2rem; }
       .detail-section h4 { font-size: 1rem; line-height: 1.6; margin-bottom: 0.1rem; }
       .detail-section p { font-size: 0.95rem; line-height: 1.6; }
@@ -1221,8 +1236,8 @@
       .view-original-btn { font-size: 0.85rem; margin-top: 0.5rem; }
 
       .works-slider-section .nav-zone { width: 36px; }
-      .works-slider-section .prev-nav-zone { left: 0; }
-      .works-slider-section .next-nav-zone { right: 0; }
+      .works-slider-section .prev-nav-zone { left: -38px; }
+      .works-slider-section .next-nav-zone { right: -38px; }
 
       /* ---- 數位作品 ---- */
       .game-section { padding: 3.6rem 7% 0.8rem; }
@@ -1340,7 +1355,7 @@
     <section class="works-slider-section" id="works">
       <h2 class="section-title"><span class="en-bold">Physical Works </span> </h2>
       <div class="slider-wrapper">
-        <div class="slides-container" id="slidesContainer">
+        <div class="slides-viewport"><div class="slides-container" id="slidesContainer">
           
           <!-- 作品 1：綻放 -->
           <div class="slide-item">
@@ -1353,12 +1368,12 @@
                 <h4>主要材料</h4><p>絲襪布、壓克力</p>
               </div>
               <div class="detail-section">
-                <h4>設計理念</h4><p>藉由光影的位置移動及花朵的旋轉，<br class="br-d">使影子產生大小變化呈現花朵綻放的姿態。</p>
+                <h4>設計理念</h4><p><span class="seg">藉由光影的位置移動及花朵的旋轉，</span> <span class="seg">使影子產生大小變化呈現花朵綻放的姿態。</span></p>
               </div>
               <div class="detail-section">
                 <h4>設計小巧思</h4>
                 <div class="highlight-box">
-                  <p>玫瑰花以鐵絲製成骨架後包上絲襪布組合而成，<br class="br-d">光影呈現會因花瓣重疊程度而有深淺差異。</p>
+                  <p><span class="seg">玫瑰花以鐵絲製成骨架後包上絲襪布組合而成，</span> <span class="seg">光影呈現會因花瓣重疊程度而有深淺差異。</span></p>
                   <a href="javascript:void(0);" onclick="openVideoModal()" class="view-original-btn">Watch the full light and shadow animation ↗</a>
                 </div>
               </div>
@@ -1374,7 +1389,7 @@
               <h3 class="slide-title">平衡</h3>
               <div class="detail-section"><h4>主要材料</h4><p>木條、鐵</p></div>
               <div class="detail-section"><h4>設計理念</h4><p>利用長短不一的木條以錯位方式排列製成坐墊。</p></div>
-              <div class="detail-section"><h4>困難點</h4><p>1.為使坐墊達成平衡不傾斜，木條的重量分布難以計算。<br>2.木條的卡榫設計因每層擺放方式不同(立著擺、躺著擺)，<br class="br-d">凹槽深度難以計算。</p></div>
+              <div class="detail-section"><h4>困難點</h4><p><span class="seg">1.為使坐墊達成平衡不傾斜，木條的重量分布難以計算。</span><br><span class="seg">2.木條的卡榫設計因每層擺放方式不同(立著擺、躺著擺)，</span> <span class="seg">凹槽深度難以計算。</span></p></div>
               <div class="detail-section"><h4>解決方法</h4><p>先將最底層木條固定於底座，再依序擺放後面幾層。</p></div>
             </div>
           </div>
@@ -1388,9 +1403,9 @@
               <h3 class="slide-title">錯位</h3>
               <div class="detail-section"><h4>主要材料</h4><p>木頭、銅線、塑膠球</p></div>
               <div class="detail-section"><h4>設計理念</h4><p>讓主體以錯位且看起來懸浮的方式呈現幾何。</p></div>
-              <div class="detail-section"><h4>困難點</h4><p>上半部主體重量較重會使整體向後傾倒<br class="br-d">(上下部分主體位置不可對調，因呈現效果較不佳)。</p></div>
-              <div class="detail-section"><h4>解決方法</h4><p>上半部主體削掉一部分去平衡，<br class="br-d">塑膠球、銅線在下半部主體作配重。</p></div>
-              <div class="detail-section"><h4>設計小巧思</h4><p>當初設計時上半部主體並沒有削掉一角的想法，<br class="br-d">是在打磨木頭時意外削掉，索性將錯就錯多削一點，<br class="br-d">結果成品意外不錯也解決配重問題。</p></div>
+              <div class="detail-section"><h4>困難點</h4><p><span class="seg">上半部主體重量較重會使整體向後傾倒</span> <span class="seg">(上下部分主體位置不可對調，因呈現效果較不佳)。</span></p></div>
+              <div class="detail-section"><h4>解決方法</h4><p><span class="seg">上半部主體削掉一部分去平衡，</span> <span class="seg">塑膠球、銅線在下半部主體作配重。</span></p></div>
+              <div class="detail-section"><h4>設計小巧思</h4><p><span class="seg">當初設計時上半部主體並沒有削掉一角的想法，</span> <span class="seg">是在打磨木頭時意外削掉，索性將錯就錯多削一點，</span> <span class="seg">結果成品意外不錯也解決配重問題。</span></p></div>
             </div>
           </div>
 
@@ -1409,7 +1424,7 @@
           </div>
 
         </div>
-        <div class="nav-zone prev-nav-zone" onclick="prevSlide()"><div class="nav-btn">❮</div></div>
+        </div><div class="nav-zone prev-nav-zone" onclick="prevSlide()"><div class="nav-btn">❮</div></div>
         <div class="nav-zone next-nav-zone" onclick="nextSlide()"><div class="nav-btn">❯</div></div>
       </div>
     </section>
